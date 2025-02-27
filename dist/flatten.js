@@ -1,8 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.flattenObject = flattenObject;
-exports.unflattenObject = unflattenObject;
-function flattenObject(obj, prefix = '') {
+export function flattenObject(obj, prefix = '') {
     let result = {};
     for (let key in obj) {
         if (!obj.hasOwnProperty(key))
@@ -25,7 +21,7 @@ function flattenObject(obj, prefix = '') {
     }
     return result;
 }
-function unflattenObject(flatObj) {
+export function unflattenObject(flatObj) {
     let result = {};
     for (let key in flatObj) {
         if (!flatObj.hasOwnProperty(key))

@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.useForm = useForm;
-const react_1 = require("react");
-const flatten_1 = require("./flatten");
-function useForm(parameters) {
-    const [values, setValues] = (0, react_1.useState)((parameters.initialValues && (0, flatten_1.flattenObject)(parameters.initialValues)) || {});
-    const [errors, setErrors] = (0, react_1.useState)({});
+import { useState } from "react";
+import { flattenObject, unflattenObject } from "./flatten";
+export function useForm(parameters) {
+    const [values, setValues] = useState((parameters.initialValues && flattenObject(parameters.initialValues)) || {});
+    const [errors, setErrors] = useState({});
     function transformArrayPattern(key) {
         return key.replace(/\[\d+\]/, "[i]");
     }
@@ -73,7 +70,7 @@ function useForm(parameters) {
             return;
         }
         const valuesScope = _values ? _values : values;
-        const obj = (0, flatten_1.unflattenObject)(valuesScope);
+        const obj = unflattenObject(valuesScope);
         if (fieldName)
             setError(fieldName, null);
         else
@@ -115,7 +112,7 @@ function useForm(parameters) {
                 }
             });
         }).then(result => {
-            const o = (0, flatten_1.unflattenObject)(values);
+            const o = unflattenObject(values);
             if (onSuccess)
                 onSuccess(o);
             return { success: true, values: o };
@@ -128,7 +125,7 @@ function useForm(parameters) {
     function updateState(key, value) {
         setValues(x => ({ ...x, [key]: value }));
         if (parameters.onChange) {
-            parameters.onChange((0, flatten_1.unflattenObject)({ ...values, [key]: value }), key);
+            parameters.onChange(unflattenObject({ ...values, [key]: value }), key);
         }
     }
     const onChange = (e, key) => {
@@ -156,15 +153,15 @@ function useForm(parameters) {
     return {
         register: register,
         validate: validate,
-        setValues: (v) => setValues(() => (0, flatten_1.flattenObject)(v)),
+        setValues: (v) => setValues(() => flattenObject(v)),
         setValue: (key, value) => setValues(x => ({ ...x, [key]: value })),
         removeValue: (key) => setValues(x => {
             const { [key]: _, ...rest } = x;
             return rest;
         }),
-        getValues: () => (0, flatten_1.unflattenObject)(values),
+        getValues: () => unflattenObject(values),
         getValue: (key) => values[key],
-        values: (0, flatten_1.unflattenObject)(values),
+        values: unflattenObject(values),
         errors: errors,
         submit: submit
     };

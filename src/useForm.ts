@@ -162,12 +162,12 @@ export function useForm(parameters : IFormParameters) : IForm
         updateState(key, value);
     }
 
-    const register = (name: string) => {
+    const register = (name: string, modify?:IPropsModify) => {
         return {
             name: name,
-            onChange: (e: any)=>onChange(e, name),
+            onChange: (e: any)=>onChange((modify?.onChange)?modify.onChange(e):e, name),
             onBlur: (e: any)=>validate(undefined, name),
-            value: values[name],
+            value: (modify?.value)?modify.value(values[name]):values[name],
             error: typeof errors[name] === "string"?errors[name]:null
         };
     }

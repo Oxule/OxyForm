@@ -37,3 +37,7 @@ interface IFormParameters {
         [key: string]: string;
     };
 }
+interface IPropsModify {
+    onChange?: (e: unknown) => unknown;
+    value?: (value: unknown) => unknown;
+}

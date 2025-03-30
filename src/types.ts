@@ -38,3 +38,8 @@ interface IFormParameters {
     validation?: {[key: string]:Validation[]};
     errors?: {[key: string]:string}
 }
+
+interface IPropsModify{
+    onChange?: (e: unknown)=>unknown;
+    value?: (value: unknown)=>unknown;
+}

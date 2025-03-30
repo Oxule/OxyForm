@@ -141,12 +141,12 @@ export function useForm(parameters) {
         }
         updateState(key, value);
     };
-    const register = (name) => {
+    const register = (name, modify) => {
         return {
             name: name,
-            onChange: (e) => onChange(e, name),
+            onChange: (e) => onChange((modify?.onChange) ? modify.onChange(e) : e, name),
             onBlur: (e) => validate(undefined, name),
-            value: values[name],
+            value: (modify?.value) ? modify.value(values[name]) : values[name],
             error: typeof errors[name] === "string" ? errors[name] : null
         };
     };

@@ -52,7 +52,7 @@ const form = useForm({
             ]
         },
         errors: {
-            "regex.age": "Age must be a number",
+            "regex-age": "Age must be a number",
             "required": "This field is required",
         },
     });
